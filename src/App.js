@@ -1,7 +1,8 @@
 import React, { Component } from "react";
+import { Button, Form } from 'react-bootstrap';
 import "./App.css";
-import update from 'immutability-helper';
 import BlockChainItem from './components/BlockChainItem'
+import 'bootstrap/dist/css/bootstrap.min.css';
 const crypto = require('crypto')
 
 class App extends Component {
@@ -9,18 +10,20 @@ class App extends Component {
     super(props)
     let today = new Date();
     this.state = {
+      currentTransaction: '',
       chain: [
         {
           index: 0,
           timestamp: today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate() + ' ' + today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds(),
           proof: 1,
-          transaction: '',
+          transaction: 'This is genesis block',
           previous_hash: '0'
         }
       ]
     }
 
     this.generateBlocks = this.generateBlocks.bind(this);
+    this.handleTransacChange = this.handleTransacChange.bind(this);
   }
 
   generateBlocks(prev_block, transaction) {
@@ -61,6 +64,10 @@ class App extends Component {
     });
   }
 
+  handleTransacChange(e) {
+    this.setState({ currentTransaction: e.target.value })
+
+  }
 
   componentDidMount() {
     //let today = new Date();
@@ -74,12 +81,17 @@ class App extends Component {
     console.log(this.state);
     //console.log(this.state.chain.slice(-1)[0])
     return (<div className="App">
-      {this.state.chain.map(item => (
-        <BlockChainItem key={item.index} item={item} />
-      ))}
-
-      <button onClick={(e) => this.generateBlocks(this.state.chain.slice(-1)[0], 'A->B 10', e)}> generate block </button>
-    </div>);
+      <div className="row">
+        {this.state.chain.map(item => (
+          <BlockChainItem key={item.index} item={item} style={{ marginLeft: '20%', marginRight: '20%' }} />
+        ))}
+      </div>
+      <br />
+      <Form.Group controlId="transactionForm" style={{ marginLeft: '20%', marginRight: '20%' }}>
+        <Form.Label>Next transaction</Form.Label>
+        <Form.Control type="text" placeholder="It can be any message" onChange={(e) => this.handleTransacChange(e)} /></Form.Group>
+      <Button variant="primary" onClick={(e) => this.generateBlocks(this.state.chain.slice(-1)[0], this.state.currentTransaction, e)}>GenerateBlocks</Button>
+    </div >);
   }
 }
 
