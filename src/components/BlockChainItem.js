@@ -9,9 +9,28 @@ class BlockChainItem extends Component {
     }
 
     handleChange(e) {
-        this.setState(state => {
-            state.cardBackground = [255, 255, 153]
-        });
+        // this.setState(state => {
+        //     state.cardBackground = [255, 255, 153]
+        // });
+        this.props.setVerification(this.props.item.index, 0)
+    }
+
+    componentWillReceiveProps(props) {
+        if (this.props.item.verified === 1) {
+            this.setState(state => {
+                state.cardBackground = [144, 230, 144]
+            });
+        }
+        else if (this.props.item.verified === 0) {
+            this.setState(state => {
+                state.cardBackground = [255, 255, 153]
+            });
+        }
+        else if (this.props.item.verified === -1) {
+            this.setState(state => {
+                state.cardBackground = [255, 204, 203]
+            });
+        }
     }
 
     render() {
@@ -35,7 +54,8 @@ class BlockChainItem extends Component {
                                 hash: <Form.Control size="sm" type="text" defaultValue={previous_hash} placeholder="hash" />
                             </Form.Group>
                         </Card.Text>
-                        <Button variant="primary">Verify This Block</Button>
+                        <Button variant="primary" style={{ marginBottom: '5%' }}>Verify This Block</Button>
+                        <Button variant="primary">Re-Hash This Block</Button>
                     </Card.Body>
                 </Card>
             </div>

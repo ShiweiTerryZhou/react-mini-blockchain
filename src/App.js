@@ -17,13 +17,15 @@ class App extends Component {
           timestamp: today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate() + ' ' + today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds(),
           proof: 1,
           transaction: 'This is genesis block',
-          previous_hash: '0'
+          previous_hash: '0',
+          verified: 1,
         }
       ]
     }
 
     this.generateBlocks = this.generateBlocks.bind(this);
     this.handleTransacChange = this.handleTransacChange.bind(this);
+    this.setVerification = this.setVerification.bind(this);
   }
 
   generateBlocks(prev_block, transaction) {
@@ -39,6 +41,8 @@ class App extends Component {
 
     //let pwd = parseInt(prev_data, 16) - parseInt(cur_data_encode, 16)
     //console.log(String(crypto.createHash('sha256').update(pwd).digest('hex')))
+    //algorithm:
+    //
     while (cur_hash.substring(0, 2) !== '00') {
       console.log(cur_hash)
       cur_proof = cur_proof + 1;
@@ -54,7 +58,8 @@ class App extends Component {
       timestamp: time,
       proof: cur_proof,
       transaction: transaction,
-      previous_hash: cur_hash
+      previous_hash: cur_hash,
+      verified: 1
     };
     this.setState(state => {
       const chain = state.chain.concat(new_block);
@@ -66,7 +71,20 @@ class App extends Component {
 
   handleTransacChange(e) {
     this.setState({ currentTransaction: e.target.value })
+  }
 
+  setVerification(index, veriStatus) {
+    if (veriStatus === 0 || veriStatus === -1) {
+      this.setState(state => {
+        const chain = state.chain;
+        for (let i = index; i < chain.length; i++) {
+          chain[i].verified = veriStatus;
+        }
+        return {
+          chain
+        }
+      });
+    }
   }
 
   componentDidMount() {
@@ -80,18 +98,20 @@ class App extends Component {
   render() {
     console.log(this.state);
     //console.log(this.state.chain.slice(-1)[0])
-    return (<div className="App">
-      <div className="row">
-        {this.state.chain.map(item => (
-          <BlockChainItem key={item.index} item={item} style={{ marginLeft: '20%', marginRight: '20%' }} />
-        ))}
-      </div>
-      <br />
-      <Form.Group controlId="transactionForm" style={{ marginLeft: '20%', marginRight: '20%' }}>
-        <Form.Label>Next transaction</Form.Label>
-        <Form.Control type="text" placeholder="It can be any message" onChange={(e) => this.handleTransacChange(e)} /></Form.Group>
-      <Button variant="primary" onClick={(e) => this.generateBlocks(this.state.chain.slice(-1)[0], this.state.currentTransaction, e)}>GenerateBlocks</Button>
-    </div >);
+    return (
+      <div className="App">
+        <div className="row">
+          {this.state.chain.map(item => (
+            <BlockChainItem setVerification={this.setVerification} key={item.index} item={item} style={{ marginLeft: '20%', marginRight: '20%' }} />
+          ))}
+        </div>
+        <br />
+        <Form.Group controlId="transactionForm" style={{ marginLeft: '20%', marginRight: '20%' }}>
+          <Form.Label>Next transaction</Form.Label>
+          <Form.Control type="text" placeholder="It can be any message" onChange={(e) => this.handleTransacChange(e)} /></Form.Group>
+        <Button variant="primary" onClick={(e) => this.generateBlocks(this.state.chain.slice(-1)[0], this.state.currentTransaction, e)}>GenerateBlocks</Button>
+      </div >
+    );
   }
 }
 
