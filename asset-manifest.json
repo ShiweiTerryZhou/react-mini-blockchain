@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.css": "/react-mini-blockchain/static/css/main.523f09c5.chunk.css",
+    "main.js": "/react-mini-blockchain/static/js/main.d962582f.chunk.js",
+    "main.js.map": "/react-mini-blockchain/static/js/main.d962582f.chunk.js.map",
+    "runtime-main.js": "/react-mini-blockchain/static/js/runtime-main.5c75f6b5.js",
+    "runtime-main.js.map": "/react-mini-blockchain/static/js/runtime-main.5c75f6b5.js.map",
+    "static/css/2.de424728.chunk.css": "/react-mini-blockchain/static/css/2.de424728.chunk.css",
+    "static/js/2.b3534438.chunk.js": "/react-mini-blockchain/static/js/2.b3534438.chunk.js",
+    "static/js/2.b3534438.chunk.js.map": "/react-mini-blockchain/static/js/2.b3534438.chunk.js.map",
+    "index.html": "/react-mini-blockchain/index.html",
+    "precache-manifest.c43a99c2680d8df3894bff3ab52d1ad4.js": "/react-mini-blockchain/precache-manifest.c43a99c2680d8df3894bff3ab52d1ad4.js",
+    "service-worker.js": "/react-mini-blockchain/service-worker.js",
+    "static/css/2.de424728.chunk.css.map": "/react-mini-blockchain/static/css/2.de424728.chunk.css.map",
+    "static/css/main.523f09c5.chunk.css.map": "/react-mini-blockchain/static/css/main.523f09c5.chunk.css.map",
+    "static/js/2.b3534438.chunk.js.LICENSE.txt": "/react-mini-blockchain/static/js/2.b3534438.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.5c75f6b5.js",
+    "static/css/2.de424728.chunk.css",
+    "static/js/2.b3534438.chunk.js",
+    "static/css/main.523f09c5.chunk.css",
+    "static/js/main.d962582f.chunk.js"
+  ]
+}
